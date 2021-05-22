@@ -6,48 +6,53 @@
 
 {% block content %}
   <h2>Passwords</h2>
-  
-  <form method="GET">
-    <input name="q" type="text" placeholder="Search for websites..."/>
-    <button type="submit">Search</button>
-  </form>
+
+  <a href="{% url 'add-password' %}">Add a Password</a>
   <br />
 
-  <table>
-    <tr>
-      <th>Website Name</th>
-      <th>Website Address</th>
-      <th></th>
-      <th></th>
-    </tr>
+  <p>
+    <form method="GET">
+      <input name="q" type="text" placeholder="Search for websites..."/>
+      <button type="submit">Search</button>
+    </form>
+    <br />
 
-    {% for password in page_obj %}
+    <table>
       <tr>
-        <td>{{ password.website_name }}</td>
-        <td>{{ password.website_address }}</td>
-        <td><a href="#">Show Password</a></td>
-        <td><a href="{% url 'delete-password' password.id %}">Delete</a></td>
+        <th>Website Name</th>
+        <th>Website Address</th>
+        <th></th>
+        <th></th>
       </tr>
-    {% endfor %}
-    
-  </table>
 
-  <br />
-  <div class="pagination">
-    <span class="step-links">
-      {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; first</a>
-        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-      {% endif %}
+      {% for password in page_obj %}
+        <tr>
+          <td>{{ password.website_name }}</td>
+          <td>{{ password.website_address }}</td>
+          <td><a href="#">Show Password</a></td>
+          <td><a href="{% url 'delete-password' password.id %}">Delete</a></td>
+        </tr>
+      {% endfor %}
 
-      <span class="current">
-        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    </table>
+
+    <br />
+    <div class="pagination">
+      <span class="step-links">
+        {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
       </span>
-
-      {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-      {% endif %}
-    </span>
-</div>
+    </div>
+  </p>
 {% endblock content %}
