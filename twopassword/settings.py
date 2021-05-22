@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'twopassword.accounts',
+    'twopassword.passwords',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,6 @@ STATIC_URL = '/static/'
 
 # Logout redirect url
 LOGOUT_REDIRECT_URL = 'logged-out'
+
+# Default login URL
+LOGIN_URL = 'login'
