@@ -67,3 +67,14 @@ def user_registration(request):
         form = UserCreationForm()
 
     return render(request, 'accounts/register.html', {'form': form})
+
+
+def logged_out(request):
+    """
+    Displays the message that the user has logged out.
+
+    **Template:**
+
+    :template:`accounts/logged_out.html`
+    """
+    return render(request, 'accounts/logged_out.html')
