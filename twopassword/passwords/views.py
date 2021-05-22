@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import render
 from django.views.generic import ListView
 
@@ -45,4 +46,10 @@ class PasswordListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        return models.Password.objects.filter(owner=user)
+        query = self.request.GET.get('q', '')
+
+        return models.Password.objects.filter(
+            owner=user
+        ).filter(
+            Q(website_name__icontains=query) | Q(website_address__icontains=query)
+        ).order_by('website_name')
