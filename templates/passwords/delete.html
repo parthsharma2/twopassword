@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Add a new password
+{% endblock %}
+
+{% block content %}
+    <h4>Are you sure you want to delete this password?</h4>
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit">Yes</button>
+    </form>
+    <form method="GET" action="{% url 'dashboard' %}">
+        <button type="submit">No</button>
+    </form>
+{% endblock content %}

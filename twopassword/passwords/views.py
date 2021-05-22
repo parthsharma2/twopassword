@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.shortcuts import render
+from django.http.response import HttpResponseForbidden
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 
 from twopassword.passwords.encryptor import Encryptor
@@ -38,6 +39,27 @@ def add_password(request):
         form = PasswordForm()
 
     return render(request, 'passwords/add.html', {'form': form})
+
+def delete_password(request, password_id):
+    """
+    Asks for user confirmation & deletes the password entry.
+
+    **Template:**
+
+    :template:`passwords/delete.html`
+    :template:`passwords/delete_success.html`
+    """
+    if request.method == 'POST':
+        instance = get_object_or_404(models.Password, pk=password_id)
+
+        if instance.owner != request.user:
+            return HttpResponseForbidden()
+
+        instance.delete()
+
+        return render(request, 'passwords/delete_success.html')
+    else:
+        return render(request, 'passwords/delete.html')
 
 
 class PasswordListView(LoginRequiredMixin, ListView):
