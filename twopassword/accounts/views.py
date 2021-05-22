@@ -1,9 +1,8 @@
 from datetime import datetime
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import AuthenticationForm
-from django.http.response import HttpResponseServerError
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.http.response import HttpResponseServerError, HttpResponse
 from django.shortcuts import render, redirect
-
 
 
 def user_login(request):
@@ -42,3 +41,29 @@ def user_login(request):
         form = AuthenticationForm()
 
     return render(request, 'accounts/login.html', {'form': form})
+
+
+def user_registration(request):
+    """
+    Allows a user to register.
+
+    **Context**
+
+    ``form``
+        An instance of :form:`django.contrib.auth.forms.UserCreationForm`.
+
+    **Template:**
+
+    :template:`accounts/register.html`
+    """
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse('successfully created a user')
+
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'accounts/register.html', {'form': form})
