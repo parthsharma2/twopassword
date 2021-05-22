@@ -35,6 +35,8 @@ def add_password(request):
             instance.owner = request.user
 
             instance.save()
+
+            return render(request, 'passwords/add_success.html')
     else:
         form = PasswordForm()
 
