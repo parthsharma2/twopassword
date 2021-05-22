@@ -23,6 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'wow&d1&nx32*^2c$8-^*ous+bc2$gjzhd=ceahm6$galb01$@o'
 
+# Secret key used for encrypting & decrypting the stored passwords
+FERNET_SECRET_KEY = '_aQ_jPzdYPslCH7FSYjaNBZHAJYkSqZ8senKaZ32Reo='
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
