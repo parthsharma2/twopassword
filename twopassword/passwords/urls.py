@@ -3,4 +3,5 @@ from twopassword.passwords import views
 
 urlpatterns = [
     path('passwords/add', views.add_password, name="create-password"),
+    path('', views.PasswordListView.as_view(), name="dashboard"),
 ]

@@ -1,8 +1,11 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
+from django.views.generic import ListView
 
 from twopassword.passwords.encryptor import Encryptor
 from twopassword.passwords.forms import PasswordForm
+from twopassword.passwords import models
 
 
 @login_required
@@ -34,3 +37,12 @@ def add_password(request):
         form = PasswordForm()
 
     return render(request, 'passwords/add.html', {'form': form})
+
+
+class PasswordListView(LoginRequiredMixin, ListView):
+    paginate_by = 5
+    template_name = 'passwords/dashboard.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        return models.Password.objects.filter(owner=user)
