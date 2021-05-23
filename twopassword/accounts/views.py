@@ -61,7 +61,7 @@ def user_registration(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponse('successfully created a user')
+            return render(request, 'accounts/register_success.html')
 
     else:
         form = UserCreationForm()
