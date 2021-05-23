@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 
 from twopassword.passwords.encryptor import Encryptor
-from twopassword.passwords.forms import PasswordForm
+from twopassword.passwords.forms import PasswordForm, PasswordVerificationForm
 from twopassword.passwords import models
 
 
@@ -42,6 +42,7 @@ def add_password(request):
 
     return render(request, 'passwords/add.html', {'form': form})
 
+@login_required
 def delete_password(request, password_id):
     """
     Asks for user confirmation & deletes the password entry.
@@ -64,6 +65,38 @@ def delete_password(request, password_id):
         return render(request, 'passwords/delete.html')
 
 
+@login_required
+def show_password(request, password_id):
+    """
+    Verifies the logged in user's password & shows the decrypted password.
+
+    **Context**
+
+    ``form``
+        An instance of :form:`twopassword.passwords.forms.PasswordVerificationForm`.
+
+    **Template:**
+
+    :template:`passwords/show.html`
+    :template:`passwords/verification.html`
+    """
+    encryptor = Encryptor()
+
+    if request.method == 'POST':
+        form = PasswordVerificationForm(user=request.user, data=request.POST)
+
+        if form.is_valid():
+            instance = get_object_or_404(models.Password, id=password_id, owner=request.user)
+            instance.password = encryptor.decrypt(instance.password)
+
+            return render(request, 'passwords/show.html', {'obj': instance})
+
+    else:
+        form = PasswordVerificationForm(user=request.user)
+
+    return render(request, 'passwords/verification.html', {'form': form})
+
+
 class PasswordListView(LoginRequiredMixin, ListView):
     paginate_by = 5
     template_name = 'passwords/dashboard.html'
@@ -75,5 +108,6 @@ class PasswordListView(LoginRequiredMixin, ListView):
         return models.Password.objects.filter(
             owner=user
         ).filter(
-            Q(website_name__icontains=query) | Q(website_address__icontains=query)
+            Q(website_name__icontains=query) |
+            Q(website_address__icontains=query)
         ).order_by('website_name')

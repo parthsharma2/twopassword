@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Password Details
+{% endblock %}
+
+{% block content %}
+  <h2>Password Details: </h2>
+  <table>
+    <tr>
+      <td>Website Name:</td>
+      <td>{{ obj.website_name }}</td>
+    </tr>
+    <tr>
+      <td>Website Address:</td>
+      <td>{{ obj.website_address }}</td>
+    </tr>
+    <tr>
+      <td>Username:</td>
+      <td>{{ obj.username }}</td>
+    </tr>
+    <tr>
+      <td>Password:</td>
+      <td>{{ obj.password }}</td>
+    </tr>
+  </table>
+  <p>
+    <a href="{% url 'dashboard' %}">Go back to Dashboard</a>
+  </p>
+{% endblock content %}

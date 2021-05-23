@@ -29,7 +29,7 @@
         <tr>
           <td>{{ password.website_name }}</td>
           <td>{{ password.website_address }}</td>
-          <td><a href="#">Show Password</a></td>
+          <td><a href="{% url 'show-password' password.id %}">Show Password</a></td>
           <td><a href="{% url 'delete-password' password.id %}">Delete</a></td>
         </tr>
       {% endfor %}
