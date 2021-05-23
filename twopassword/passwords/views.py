@@ -1,7 +1,8 @@
+from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http.response import HttpResponseForbidden
+from django.http.response import HttpResponseForbidden, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 
@@ -95,6 +96,15 @@ def show_password(request, password_id):
         form = PasswordVerificationForm(user=request.user)
 
     return render(request, 'passwords/verification.html', {'form': form})
+
+
+@login_required
+def generate_password(request):
+    """
+    Generates a random 15 character password & returns it as a JSON response.
+    """
+    password = BaseUserManager().make_random_password(15)
+    return JsonResponse({'password': password})
 
 
 class PasswordListView(LoginRequiredMixin, ListView):

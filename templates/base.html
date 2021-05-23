@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
+    {% load static %}
     <title>
       {% block title %}
         TwoPassword
       {% endblock title %}
     </title>
+    <script src="{% static 'js/app.js' %}"></script>
   </head>
 
   <body>

@@ -9,6 +9,11 @@
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit">Add</button>
+      <p>
+        <button type="button" onclick="setRandomPassword()">Generate Random Password</button>
+      </p>
+      <p>
+        <button type="submit">Add</button>
+      </p>
     </form>
 {% endblock content %}
