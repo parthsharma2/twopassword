@@ -59,3 +59,11 @@ python manage.py test
 ## Settings
 This section refers to custom settings that have been added to `twopassword/settings.py`
 - `FERNET_SECRET_KEY`: This is a 44 character key that is used for encrypting & decrypting passwords stored by the user. Feel free to change it & make sure to keep it safe. I suggest using [Fernet.generate_key](https://cryptography.io/en/latest/fernet/#cryptography.fernet.Fernet.generate_key) to generate this key. **Please note:** If you change the key after passwords have been added to the database, you will have to first decrypt all those added passwords using the old key & then re-encrypt them using the new key.
+
+## TODOs
+
+Here are a few things I wanted to add but couldn't:
+
+- More unit tests. Currently only unit tests for `twopassword/passwords/views.py` exist.
+-  Add a management command that allows you generate a new `FERNET_SECRET_KEY`, which also re-encrypts the stored passwords.
+- Add bootstrap to make the UI a bit beautiful.
