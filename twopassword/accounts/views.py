@@ -34,8 +34,7 @@ def user_login(request):
                 next = request.GET.get('next', '/')
 
                 return redirect(next)
-            else:
-                return HttpResponseServerError('an error occured while logging in')
+            return HttpResponseServerError('an error occured while logging in')
 
     else:
         form = AuthenticationForm()

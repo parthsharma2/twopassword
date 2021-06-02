@@ -62,8 +62,7 @@ def delete_password(request, password_id):
         instance.delete()
 
         return render(request, 'passwords/delete_success.html')
-    else:
-        return render(request, 'passwords/delete.html')
+    return render(request, 'passwords/delete.html')
 
 
 @login_required
