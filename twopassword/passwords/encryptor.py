@@ -25,7 +25,7 @@ class Encryptor:
         Returns:
             str: the encrypted string.
         """
-        return self.fernet.encrypt(msg.encode()).decode('utf-8')
+        return self.fernet.encrypt(msg.encode()).decode("utf-8")
 
     def decrypt(self, msg):
         """Decrypts a string & returns it.
@@ -36,4 +36,4 @@ class Encryptor:
         Returns:
             str: the decrypted string.
         """
-        return self.fernet.decrypt(msg.encode()).decode('utf-8')
+        return self.fernet.decrypt(msg.encode()).decode("utf-8")
