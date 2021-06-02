@@ -18,29 +18,29 @@ def user_login(request):
 
     :template:`accounts/login.html`
     """
-    if request.method == 'POST':
+    if request.method == "POST":
         form = AuthenticationForm(data=request.POST)
 
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
 
             user = authenticate(request, username=username, password=password)
 
             if user and user.is_active:
                 login(request, user)
-                request.session['last_login_at'] = datetime.now().timestamp()
+                request.session["last_login_at"] = datetime.now().timestamp()
 
-                next = request.GET.get('next', '/')
+                next = request.GET.get("next", "/")
 
                 return redirect(next)
             else:
-                return HttpResponseServerError('an error occured while logging in')
+                return HttpResponseServerError("an error occured while logging in")
 
     else:
         form = AuthenticationForm()
 
-    return render(request, 'accounts/login.html', {'form': form})
+    return render(request, "accounts/login.html", {"form": form})
 
 
 def user_registration(request):
@@ -56,17 +56,17 @@ def user_registration(request):
 
     :template:`accounts/register.html`
     """
-    if request.method == 'POST':
+    if request.method == "POST":
         form = UserCreationForm(request.POST)
 
         if form.is_valid():
             form.save()
-            return render(request, 'accounts/register_success.html')
+            return render(request, "accounts/register_success.html")
 
     else:
         form = UserCreationForm()
 
-    return render(request, 'accounts/register.html', {'form': form})
+    return render(request, "accounts/register.html", {"form": form})
 
 
 def logged_out(request):
@@ -77,4 +77,4 @@ def logged_out(request):
 
     :template:`accounts/logged_out.html`
     """
-    return render(request, 'accounts/logged_out.html')
+    return render(request, "accounts/logged_out.html")

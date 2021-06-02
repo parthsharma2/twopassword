@@ -15,14 +15,29 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Password',
+            name="Password",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('website_name', models.CharField(max_length=64)),
-                ('website_address', models.CharField(max_length=253)),
-                ('username', models.CharField(max_length=254)),
-                ('password', models.CharField(max_length=256)),
-                ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("website_name", models.CharField(max_length=64)),
+                ("website_address", models.CharField(max_length=253)),
+                ("username", models.CharField(max_length=254)),
+                ("password", models.CharField(max_length=256)),
+                (
+                    "owner",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="+",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

@@ -6,7 +6,7 @@ from twopassword.passwords import models
 class PasswordForm(forms.ModelForm):
     class Meta:
         model = models.Password
-        exclude = ['owner']
+        exclude = ["owner"]
 
 
 class PasswordVerificationForm(forms.Form):
@@ -19,6 +19,6 @@ class PasswordVerificationForm(forms.Form):
         super(PasswordVerificationForm, self).__init__(*args, **kwargs)
 
     def clean_password(self):
-        password = self.cleaned_data.get('password', '')
+        password = self.cleaned_data.get("password", "")
         if not self.user.check_password(password):
-            raise ValidationError('Invalid password')
+            raise ValidationError("Invalid password")
